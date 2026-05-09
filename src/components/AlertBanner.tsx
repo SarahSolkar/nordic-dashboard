@@ -1,12 +1,21 @@
 import type { PortfolioCompany } from "../types";
 
-export function AlertBanner({ companies }: { companies: PortfolioCompany[] }) {
-  const count = companies.filter((c) => c.ebitdaMargin < 0).length;
-  if (count === 0) return null;
+interface Props {
+  companies: PortfolioCompany[];
+}
+
+export function AlertBanner({ companies }: Props) {
+  const negative = companies.filter((c) => c.ebitdaMargin < 0);
+
+  if (negative.length === 0) return null;
+
+  const names = negative.map((c) => c.name).join(", ");
+
   return (
-    <div className="bg-amber-50 border border-amber-300 text-amber-800 rounded-lg px-4 py-2 text-sm">
-      ⚠ {count} portfolio {count === 1 ? "company" : "companies"} with negative
-      EBITDA margin
+    <div className="bg-amber-50 dark:bg-amber-950 border border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-300 rounded-lg px-4 py-2 text-sm">
+      ⚠ {negative.length} portfolio{" "}
+      {negative.length === 1 ? "company" : "companies"} with negative EBITDA
+      margin: <span className="font-semibold">{names}</span>
     </div>
   );
 }
