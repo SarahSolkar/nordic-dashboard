@@ -29,12 +29,12 @@ export function KPICards({ metrics }: Props) {
       {cards.map(({ key, label, type }) => (
         <div
           key={key}
-          className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 space-y-1 hover:shadow-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 cursor-pointer"
+          className="bg-white rounded-xl border border-gray-200 px-4 py-3 space-y-1 hover:shadow-lg hover:bg-gray-50 transition-all duration-200 cursor-pointer"
         >
-          <p className="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">
+          <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">
             {label}
           </p>
-          <p className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white truncate">
+          <p className="text-lg sm:text-xl font-semibold text-gray-900 truncate">
             {fmt(metrics[key as keyof FundMetrics], type)}
           </p>
         </div>

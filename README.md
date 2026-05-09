@@ -17,8 +17,6 @@ The frontend will start on `http://localhost:5173`
 
 - **Vite + React + TypeScript** - TypeScript was non-negotiable for a data-heavy dashboard and NAV history all fully typed catches shape mismatches at compile time rather than runtime.
 
-- **Zustand over React Context** - Selected fund and multi-fund overlay state is shared across the selector, KPI cards, chart and table simultaneously. Context would cause the entire tree to re-render on every fund switch Zustand's selector-based subscriptions mean only the components that actually consume the changed slice re-render.
-
 - **Highcharts** - Highcharts has a first-class TypeScript API, built-in compact currency formatting, multi-series support, axis tooltip formatters that made the overlay bonus straightforward.
 
 - **material-react-table v3** - Full control over sorting, filtering, and row-level styling declaratively. Conditional row background is a single `muiTableBodyRowProps` callback rather than custom code.

@@ -30,16 +30,8 @@ const columns: MRT_ColumnDef<PortfolioCompany>[] = [
     Cell: ({ cell }) => `$${(cell.getValue<number>() / 1e6).toFixed(1)}M`,
   },
   {
-    accessorKey: "flags",
-    header: "Flag",
-    enableSorting: false,
-    Cell: ({ cell }) => {
-      const flags = cell.getValue<string[]>();
-      if (flags.includes("at-risk"))
-        return <span className="...">at-risk</span>;
-      if (flags.includes("watch")) return <span className="...">watch</span>;
-      return null;
-    },
+    accessorKey: "status",
+    header: "Status",
   },
 ];
 
