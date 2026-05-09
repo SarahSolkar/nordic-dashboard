@@ -6,7 +6,7 @@ interface Props {
 
 const fmt = (n: number, type: "pct" | "mult" | "currency") => {
   if (type === "pct") return `${n.toFixed(1)}%`;
-  if (type === "mult") return `${n.toFixed(2)}×`;
+  if (type === "mult") return `${n.toFixed(2)}x`;
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -25,16 +25,16 @@ const cards = [
 
 export function KPICards({ metrics }: Props) {
   return (
-    <div className="grid grid-cols-5 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
       {cards.map(({ key, label, type }) => (
         <div
           key={key}
-          className="bg-white rounded-xl border border-gray-200 px-4 py-3 space-y-1"
+          className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 space-y-1 hover:shadow-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 cursor-pointer"
         >
-          <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">
+          <p className="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">
             {label}
           </p>
-          <p className="text-xl font-semibold text-gray-900">
+          <p className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white truncate">
             {fmt(metrics[key as keyof FundMetrics], type)}
           </p>
         </div>

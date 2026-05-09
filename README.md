@@ -1,28 +1,43 @@
-# Nordic Analytics — Fund Intelligence Dashboard
+# Fund Intelligence Dashboard
+
+![Screenshot of Dashboard](src/assets/dashboard.png)
 
 ## Running locally
 
 ``` bash
 git clone https://github.com/SarahSolkar/nordic-dashboard.git
-npm install && npm run dev
+cd nordic-dashboard
+npm install
+npm run dev
 ```
+
+The frontend will start on `http://localhost:5173`
 
 ## Technical decisions
 
-- **Vite + React + TypeScript** - fast dev server, strong typing end-to-end
-- **Zustand** - minimal global state for fund selection and multi-fund overlay; avoids prop-drilling without Redux ceremony
-- **Highcharts** - Built-in axis/tooltip formatters and multi-series support needed for the overlay bonus
-- **material-react-table v3** - TanStack Table v8 under the hood; declarative column sorting and conditional row styling in ~20 lines
-- **Tailwind CSS v4** - utility-first, no custom CSS files, consistent spacing
+- **Vite + React + TypeScript** - TypeScript was non-negotiable for a data-heavy dashboard and NAV history all fully typed catches shape mismatches at compile time rather than runtime.
+
+- **Zustand over React Context** - Selected fund and multi-fund overlay state is shared across the selector, KPI cards, chart and table simultaneously. Context would cause the entire tree to re-render on every fund switch Zustand's selector-based subscriptions mean only the components that actually consume the changed slice re-render.
+
+- **Highcharts** - Highcharts has a first-class TypeScript API, built-in compact currency formatting, multi-series support, axis tooltip formatters that made the overlay bonus straightforward.
+
+- **material-react-table v3** - Full control over sorting, filtering, and row-level styling declaratively. Conditional row background is a single `muiTableBodyRowProps` callback rather than custom code.
+
+- **Tailwind CSS v4** - utility-first means zero custom CSS files.
+
+---
 
 ## What I'd add with more time
 
-- Unit tests for formatting utils (Vitest + Testing Library)
-- Skeleton loading states
-- Dark mode (Tailwind dark: variants + Highcharts dark theme)
-- Storybook for isolated component development
+- **Unit tests** for the formatting utilities (`fmt` in KPICards) and store logic using Vitest + Testing Library
+- **Dark mode** via Tailwind `dark:` variants and a Highcharts theme toggle
+- **Skeleton loading states** for the chart and table so the layout doesn't shift if data were coming from an API
+- **Persisted fund selection** via `localStorage` so the selected fund survives a page refresh
+
+---
 
 ## Known limitations
 
-- Dataset is static, no real-time updates
-- No error boundary around the Highcharts chart
+- Dataset is static and hardcoded; switching to a real API would require loading states and error handling throughout
+- No error boundary around the chart; a malformed data entry would crash the panel silently
+- The responsive layout is tested down to ~375px but not on true mobile touch devices
