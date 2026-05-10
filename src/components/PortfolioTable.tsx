@@ -46,9 +46,9 @@ export function PortfolioTable({
     muiTableBodyRowProps: ({ row }) => ({
       sx: {
         backgroundColor: row.original.flags.includes("at-risk")
-          ? "#FCEBEB"
+          ? "#f46161"
           : row.original.flags.includes("watch")
-            ? "#FAEEDA"
+            ? "#fdfebf"
             : undefined,
       },
     }),
